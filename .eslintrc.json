@@ -1,0 +1,12 @@
+{
+  "root": true,
+  "extends": "@qgh/eslint-config-ts",
+  "ignorePatterns": [
+    "out",
+    "dist",
+    "**/*.d.ts"
+  ],
+  "rules": {
+    "no-tabs": ["error", { "allowIndentationTabs": true }]
+  }
+}
