@@ -3,7 +3,7 @@ import { type } from 'os'
 import { readFile, writeFile, readdir, mkdir, unlink } from 'fs/promises'
 import { existsSync } from 'fs'
 import { join } from 'path'
-import type { Snippet } from './snippets'
+import type { Snippet } from './types'
 
 function getSnippetsPath() {
   let vsCodeUserSettingsPath

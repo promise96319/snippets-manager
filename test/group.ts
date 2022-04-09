@@ -7,7 +7,7 @@ import {
   parseGroupName,
   removeAllGroups,
 } from '../src/group'
-import type { Snippet } from '../src/snippets'
+import type { Snippet } from '../src/types'
 
 it('getGroupPath', async() => {
   expect(await getGroupPath('test')).toMatch('ghghgh_test.code-snippets')

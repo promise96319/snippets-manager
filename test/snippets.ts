@@ -1,4 +1,4 @@
-// import { expect, it } from 'vitest'
+import { expect, it } from 'vitest'
 // import { normalizeSnippet } from '../src/snippets'
 
 // it.skip('normalizeSnippet', async() => {
@@ -13,3 +13,7 @@
 //     }
 //   `)
 // })
+
+it('should', async() => {
+  expect(true).toBe(true)
+})

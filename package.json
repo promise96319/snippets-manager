@@ -32,8 +32,8 @@
     "keybindings": [
       {
         "command": "SnippetsManager.run",
-        "key": "ctrl+k shift+ctrl+s",
-        "mac": "cmd+k shift+cmd+s",
+        "key": "ctrl+k shift+ctrl+z",
+        "mac": "cmd+k shift+cmd+z",
         "when": "editorTextFocus"
       }
     ],
