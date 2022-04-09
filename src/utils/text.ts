@@ -18,9 +18,9 @@ export const transformSnippetToText = (group: string, snippet: Snippet): string 
 }
 
 export const transformTextToSnippet = (text: string) => {
-  const lines = text.split('\n')
+  const lines = transformTextToLines(text)
   const body: string[] = []
-  const snippet: Record<string, string | string[]> = {}
+  const snippet: Partial<Snippet> & Record<string, string> = {}
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i]

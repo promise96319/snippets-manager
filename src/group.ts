@@ -3,7 +3,7 @@ import { type } from 'os'
 import { readFile, writeFile, readdir, mkdir, unlink } from 'fs/promises'
 import { existsSync } from 'fs'
 import { join } from 'path'
-import type { Snippet } from './types'
+import type { Snippet, SnippetsMap, GroupsMap } from './types'
 
 function getSnippetsPath() {
   let vsCodeUserSettingsPath
@@ -36,9 +36,6 @@ function getSnippetsPath() {
 
 export const VSCODE_SNIPPETS_PATH = getSnippetsPath()
 export const SNIPPETS_PREFIX = 'ghghgh_'
-
-type SnippetsMap = Record<string, Snippet>
-type GroupsMap= Record<string, SnippetsMap>
 
 export function isGroupName(filename: string) {
   return filename.startsWith(SNIPPETS_PREFIX) && filename.endsWith('.code-snippets')

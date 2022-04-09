@@ -18,7 +18,10 @@
   ],
   "activationEvents": [
     "onCommand:SnippetsManager.run",
-    "onView:snippets-manager-explorer"
+    "onCommand:SnippetsManager.open",
+    "onCommand:SnippetsManager.refresh",
+    "onView:snippets-manager-explorer",
+    "onView:SnippetsManager"
   ],
   "main": "./dist/index.js",
   "contributes": {
@@ -27,6 +30,15 @@
         "command": "SnippetsManager.run",
         "title": "Create Snippet from Selection",
         "category": "Snippets Manager"
+      },
+      {
+        "command": "SnippetsManager.open",
+        "title": "Open snippet view",
+        "category": "Snippets Manager"
+      },
+      {
+        "command": "SnippetsManager.refresh",
+        "title": "This is Refresh test."
       }
     ],
     "keybindings": [
@@ -41,7 +53,7 @@
       "activitybar": [
         {
           "id": "snippets-manager-explorer",
-          "title": "Snippets",
+          "title": "Snippets Explorer",
           "icon": "media/check-circle-filled.svg"
         }
       ]
@@ -49,10 +61,25 @@
     "views": {
       "snippets-manager-explorer": [
         {
-          "id": "snippets-manager-search",
-          "name": "Snippets Explorer",
+          "id": "SnippetsManager",
+          "name": "Snippets Manager View",
           "icon": "media/warning-circle-filled.svg",
           "contextualTitle": "Snippets Explorer"
+        }
+      ]
+    },
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "SnippetsManager.run",
+          "when": "editorHasSelection"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "SnippetsManager.refresh",
+          "when": "view == nodeDependencies",
+          "group": "navigation"
         }
       ]
     }
