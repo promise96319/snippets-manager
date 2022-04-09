@@ -9,7 +9,6 @@
     "create snippets",
     "snippet generator"
   ],
-  "": "src/extension.ts",
   "repository": "https://github.com/promise96319/snippets-manager.git",
   "engines": {
     "vscode": "^1.66.0"
@@ -18,9 +17,10 @@
     "Snippets"
   ],
   "activationEvents": [
-    "onCommand:SnippetsManager.run"
+    "onCommand:SnippetsManager.run",
+    "onView:snippets-manager-explorer"
   ],
-  "main": "./dist/extension.js",
+  "main": "./dist/index.js",
   "contributes": {
     "commands": [
       {
@@ -40,17 +40,19 @@
     "viewsContainers": {
       "activitybar": [
         {
-          "id": "snippets-manager",
-          "title": "Snippets Manager",
-          "icon": "$(open-editors-view-icon)"
+          "id": "snippets-manager-explorer",
+          "title": "Snippets",
+          "icon": "media/check-circle-filled.svg"
         }
       ]
     },
     "views": {
-      "snippet-explorer": [
+      "snippets-manager-explorer": [
         {
-          "id": "snippets-manager",
-          "name": "Search snippets"
+          "id": "snippets-manager-search",
+          "name": "Snippets Explorer",
+          "icon": "media/warning-circle-filled.svg",
+          "contextualTitle": "Snippets Explorer"
         }
       ]
     }
