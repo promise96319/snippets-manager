@@ -20,6 +20,9 @@
     "onCommand:SnippetsManager.run",
     "onCommand:SnippetsManager.open",
     "onCommand:SnippetsManager.refresh",
+    "onCommand:SnippetsManager.addGroup",
+    "onCommand:SnippetsManager.renameGroup",
+    "onCommand:SnippetsManager.deleteGroup",
     "onView:snippets-manager-explorer",
     "onView:SnippetsManager"
   ],
@@ -38,7 +41,23 @@
       },
       {
         "command": "SnippetsManager.refresh",
-        "title": "This is Refresh test."
+        "title": "Reload snippets group view",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "SnippetsManager.addGroup",
+        "title": "Add a new snippets group",
+        "icon": "$(add)"
+      },
+      {
+        "command": "SnippetsManager.renameGroup",
+        "title": "Rename snippets group",
+        "icon": "$(edit)"
+      },
+      {
+        "command": "SnippetsManager.deleteGroup",
+        "title": "Delete snippets group",
+        "icon": "$(notebook-delete-cell)"
       }
     ],
     "keybindings": [
@@ -53,7 +72,7 @@
       "activitybar": [
         {
           "id": "snippets-manager-explorer",
-          "title": "Snippets Explorer",
+          "title": "Snippets Manager",
           "icon": "media/check-circle-filled.svg"
         }
       ]
@@ -62,9 +81,8 @@
       "snippets-manager-explorer": [
         {
           "id": "SnippetsManager",
-          "name": "Snippets Manager View",
-          "icon": "media/warning-circle-filled.svg",
-          "contextualTitle": "Snippets Explorer"
+          "name": "Snippets Explorer",
+          "icon": "media/check-circle-filled.svg"
         }
       ]
     },
@@ -77,9 +95,26 @@
       ],
       "view/title": [
         {
+          "command": "SnippetsManager.addGroup",
+          "when": "view == SnippetsManager",
+          "group": "navigation@10"
+        },
+        {
           "command": "SnippetsManager.refresh",
-          "when": "view == nodeDependencies",
-          "group": "navigation"
+          "when": "view == SnippetsManager",
+          "group": "navigation@20"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "SnippetsManager.deleteGroup",
+          "when": "view == SnippetsManager && viewItem == group",
+          "group": "inline"
+        },
+        {
+          "command": "SnippetsManager.renameGroup",
+          "when": "view == SnippetsManager && viewItem == group",
+          "group": "inline"
         }
       ]
     }

@@ -4,12 +4,11 @@ import { existsSync } from 'fs'
 import { writeFile } from 'fs/promises'
 import { window, Uri, languages, Range, Position, Selection } from 'vscode'
 import { error, getSelectedText, info, transformSnippetToText, transformTextToSnippet } from './utils'
-import { updateGroup } from './group'
-import { provider } from './tree-view'
+import { updateGroup, GROUP_DEFAULT } from './group'
+import { provider } from './provider'
 import type { Snippet } from './types'
 
 export const SCOPE_GLOBAL = '*'
-export const GROUP_DEFAULT = 'default'
 export const TMP_FILE_SUFFIX = 'gh_snippets_tmp.snippets'
 
 export async function normalizeSnippet(text: string): Promise<Snippet | undefined> {

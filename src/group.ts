@@ -36,9 +36,20 @@ function getSnippetsPath() {
 
 export const VSCODE_SNIPPETS_PATH = getSnippetsPath()
 export const SNIPPETS_PREFIX = 'ghghgh_'
+// can't be renamed
+export const GROUP_DEFAULT = 'default'
+let cachedGroups: GroupsMap = {}
 
 export function isGroupName(filename: string) {
   return filename.startsWith(SNIPPETS_PREFIX) && filename.endsWith('.code-snippets')
+}
+
+export function isGroupNameExisted(group: string) {
+  return cachedGroups[group]
+}
+
+export function isSnippetNameExisted(group: string, snippet: string) {
+  return cachedGroups[group] && cachedGroups[group][snippet]
 }
 
 export function parseGroupName(filename: string) {
@@ -66,12 +77,6 @@ export async function readGroup(group: string): Promise<SnippetsMap> {
   return new Function(`return ${text}`)() as SnippetsMap
 }
 
-export async function updateGroup(group: string, snippet: Snippet) {
-  const snippetsMap: SnippetsMap = await readGroup(group)
-  snippetsMap[snippet.prefix] = snippet
-  return await writeGroup(group, snippetsMap)
-}
-
 export async function removeGroup(group: string) {
   const groupPath = await getGroupPath(group)
   if (existsSync(groupPath))
@@ -88,7 +93,10 @@ export async function removeAllGroups() {
   }
 }
 
-export async function getAllGroups(): Promise<GroupsMap> {
+/**
+ * Fetch newest groups and cache it, you can read groups rom cache,
+ */
+export async function refreshGroups(): Promise<GroupsMap> {
   if (!existsSync(VSCODE_SNIPPETS_PATH))
     await mkdir(VSCODE_SNIPPETS_PATH)
 
@@ -101,5 +109,28 @@ export async function getAllGroups(): Promise<GroupsMap> {
     groups[group] = snippetsMap
   }
 
+  cachedGroups = groups
   return groups
+}
+
+export function getAllGroups() {
+  return cachedGroups
+}
+
+export async function updateGroup(group: string, snippet: Snippet) {
+  const groupsMap = getAllGroups()
+  const snippetsMap: SnippetsMap = groupsMap[group]
+  snippetsMap[snippet.prefix] = snippet
+  return await writeGroup(group, snippetsMap)
+}
+
+export async function addGroup(group: string) {
+  return await writeGroup(group, {})
+}
+
+export async function renameGroup(group: string, target: string) {
+  const groups = getAllGroups()
+  const snippetsMap = groups[group]
+  await removeGroup(group)
+  return await writeGroup(target, snippetsMap)
 }

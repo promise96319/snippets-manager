@@ -1,6 +1,6 @@
 import { expect, it, describe } from 'vitest'
 import {
-  getAllGroups,
+  refreshGroups,
   updateGroup,
   getGroupPath,
   isGroupName,
@@ -33,12 +33,12 @@ describe.skip('group', () => {
   const group = 'test'
   it('removeAllGroups', async() => {
     await removeAllGroups()
-    expect(await getAllGroups()).toEqual({})
+    expect(await refreshGroups()).toEqual({})
   })
 
   it('addGroup', async() => {
     await updateGroup(group, snippets)
-    expect(await getAllGroups()).toMatchInlineSnapshot(`
+    expect(await refreshGroups()).toMatchInlineSnapshot(`
     {
       "test": {
         "test": {
@@ -57,7 +57,7 @@ describe.skip('group', () => {
   it('updateGroup', async() => {
     snippets.scope = 'ts'
     await updateGroup(group, snippets)
-    expect(await getAllGroups()).toMatchInlineSnapshot(`
+    expect(await refreshGroups()).toMatchInlineSnapshot(`
     {
       "test": {
         "test": {

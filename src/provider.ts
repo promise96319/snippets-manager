@@ -1,7 +1,6 @@
-import { join } from 'path'
 import type { TreeDataProvider, TreeView, Event } from 'vscode'
 import { EventEmitter, TreeItem, TreeItemCollapsibleState, window } from 'vscode'
-import { getAllGroups } from './group'
+import { refreshGroups } from './group'
 import type { Snippet, SnippetsMap } from './types'
 
 export class GroupItem extends TreeItem {
@@ -17,17 +16,16 @@ export class GroupItem extends TreeItem {
     this.id = group
     this.label = group
     this.description = ''
-    this.tooltip = 'This is a group of snippets'
+    this.tooltip = ''
     this.collapsibleState = collapsibleState
 
     this.group = group
     this.snippets = snippets
+    this.contextValue = 'group'
   }
 
-  iconPath = {
-    light: join(__filename, '../media/check-circle-filled.svg'),
-    dark: join(__filename, '../media/check-circle-filled.svg'),
-  }
+  // iconPath = join(__filename, '..', 'check-circle-filled.svg')
+  iconPath = '$(list-tree)'
 }
 
 export class SnippetItem extends TreeItem {
@@ -48,10 +46,7 @@ export class SnippetItem extends TreeItem {
     this.snippet = snippet
   }
 
-  iconPath = {
-    light: join(__filename, '../media/close-circle-filled.svg'),
-    dark: join(__filename, '../media/close-circle-filled.svg'),
-  }
+  iconPath = '$(terminal-view-icon)'
 }
 
 export class GroupTreeProvider implements TreeDataProvider<TreeItem> {
@@ -72,7 +67,7 @@ export class GroupTreeProvider implements TreeDataProvider<TreeItem> {
     }
     // If no element is provided, return the group list
     else {
-      const groups = await getAllGroups()
+      const groups = await refreshGroups()
       const groupItems: GroupItem[] = []
       Object.entries(groups).forEach(([group, snippets]) => {
         groupItems.push(new GroupItem(group, snippets, TreeItemCollapsibleState.Collapsed))

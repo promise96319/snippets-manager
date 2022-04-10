@@ -1,10 +1,5 @@
-import { readFileSync } from 'fs'
-import { join } from 'path'
 import { window } from 'vscode'
-
-const packageJsonPath = join(__dirname, '..', '..', 'package.json')
-const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf-8'))
-const displayName = packageJson.displayName || 'Snippet Manager'
+import { displayName } from './json'
 
 export const info = (msg: string) => {
   window.showInformationMessage(`${displayName}: ${msg}`)
