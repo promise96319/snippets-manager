@@ -44,6 +44,7 @@ export class SnippetItem extends TreeItem {
 
     this.group = group
     this.snippet = snippet
+    this.contextValue = 'snippet'
   }
 
   iconPath = '$(terminal-view-icon)'

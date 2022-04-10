@@ -5,7 +5,7 @@ describe('transform text', async() => {
   const snippet = {
     scope: 'js',
     prefix: 'test',
-    body: ['test'],
+    body: ['', 'test', '', 'asd', ''],
     description: 'hello world',
   }
   const text = await transformSnippetToText('test', snippet)
@@ -16,7 +16,11 @@ describe('transform text', async() => {
       // @scope js
       // @prefix test
       // @description hello world
-      test"
+      
+      test
+      
+      asd
+      "
     `)
   })
 
@@ -25,8 +29,10 @@ describe('transform text', async() => {
       {
         "body": [
           "test",
+          "",
+          "asd",
         ],
-        "description": "hello",
+        "description": "hello world",
         "group": "test",
         "prefix": "test",
         "scope": "js",

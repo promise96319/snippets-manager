@@ -1,47 +1,22 @@
 
-import { type } from 'os'
 import { readFile, writeFile, readdir, mkdir, unlink } from 'fs/promises'
 import { existsSync } from 'fs'
 import { join } from 'path'
 import type { Snippet, SnippetsMap, GroupsMap } from './types'
-
-function getSnippetsPath() {
-  let vsCodeUserSettingsPath
-  const isInsiders = /insiders/i.test(process.argv0)
-  const isCodium = /codium/i.test(process.argv0)
-  const isOSS = /vscode-oss/i.test(__dirname)
-  const CodeDir = isInsiders ? 'Code - Insiders' : isCodium ? 'VSCodium' : isOSS ? 'Code - OSS' : 'Code'
-  const isPortable = !!process.env.VSCODE_PORTABLE
-  if (isPortable) {
-    vsCodeUserSettingsPath = `${process.env.VSCODE_PORTABLE}/user-data/User/`
-  }
-  else {
-    switch (type()) {
-      case 'Darwin':
-        vsCodeUserSettingsPath = `${process.env.HOME}/Library/Application Support/${CodeDir}/User/`
-        break
-      case 'Linux':
-        vsCodeUserSettingsPath = `${process.env.HOME}/.config/${CodeDir}/User/`
-        break
-      case 'Windows_NT':
-        vsCodeUserSettingsPath = `${process.env.APPDATA}\\${CodeDir}\\User\\`
-        break
-      default:
-        vsCodeUserSettingsPath = `${process.env.HOME}/.config/${CodeDir}/User/`
-        break
-    }
-  }
-  return join(vsCodeUserSettingsPath, 'snippets')
-}
+import { getSnippetsPath } from './utils'
 
 export const VSCODE_SNIPPETS_PATH = getSnippetsPath()
-export const SNIPPETS_PREFIX = 'ghghgh_'
-// can't be renamed
-export const GROUP_DEFAULT = 'default'
+/**
+ * Be careful with renameing this constant.
+ * If it's renamed，User's snippets group may be display differently.
+ */
+export const SNIPPETS_FILE_PREFIX = ''
+// Default group name, be careful with renameing this constant,
+export const GROUP_DEFAULT = 'ungrouped'
 let cachedGroups: GroupsMap = {}
 
 export function isGroupName(filename: string) {
-  return filename.startsWith(SNIPPETS_PREFIX) && filename.endsWith('.code-snippets')
+  return filename.startsWith(SNIPPETS_FILE_PREFIX) && filename.endsWith('.code-snippets')
 }
 
 export function isGroupNameExisted(group: string) {
@@ -53,11 +28,11 @@ export function isSnippetNameExisted(group: string, snippet: string) {
 }
 
 export function parseGroupName(filename: string) {
-  return filename.replace(/\.code-snippets$/, '').replace(SNIPPETS_PREFIX, '')
+  return filename.replace(/\.code-snippets$/, '').replace(SNIPPETS_FILE_PREFIX, '')
 }
 
 export async function getGroupPath(group: string) {
-  const fileName = `${SNIPPETS_PREFIX}${group}.code-snippets`
+  const fileName = `${SNIPPETS_FILE_PREFIX}${group}.code-snippets`
   const groupPath = join(VSCODE_SNIPPETS_PATH, fileName)
   if (!existsSync(groupPath))
     await writeFile(groupPath, '{}')
@@ -119,7 +94,7 @@ export function getAllGroups() {
 
 export async function updateGroup(group: string, snippet: Snippet) {
   const groupsMap = getAllGroups()
-  const snippetsMap: SnippetsMap = groupsMap[group]
+  const snippetsMap: SnippetsMap = groupsMap[group] || {}
   snippetsMap[snippet.prefix] = snippet
   return await writeGroup(group, snippetsMap)
 }
@@ -133,4 +108,11 @@ export async function renameGroup(group: string, target: string) {
   const snippetsMap = groups[group]
   await removeGroup(group)
   return await writeGroup(target, snippetsMap)
+}
+
+export async function removeSnippet(group: string, snippetKey: string) {
+  const groupsMap = getAllGroups()
+  const snippetsMap: SnippetsMap = groupsMap[group]
+  delete snippetsMap[snippetKey]
+  return await writeGroup(group, snippetsMap)
 }

@@ -17,23 +17,21 @@
     "Snippets"
   ],
   "activationEvents": [
-    "onCommand:SnippetsManager.run",
     "onCommand:SnippetsManager.open",
     "onCommand:SnippetsManager.refresh",
     "onCommand:SnippetsManager.addGroup",
     "onCommand:SnippetsManager.renameGroup",
     "onCommand:SnippetsManager.deleteGroup",
+    "onCommand:SnippetsManager.addGroupSnippet",
+    "onCommand:SnippetsManager.addSnippet",
+    "onCommand:SnippetsManager.deleteSnippet",
+    "onCommand:SnippetsManager.editSnippet",
     "onView:snippets-manager-explorer",
     "onView:SnippetsManager"
   ],
   "main": "./dist/index.js",
   "contributes": {
     "commands": [
-      {
-        "command": "SnippetsManager.run",
-        "title": "Create Snippet from Selection",
-        "category": "Snippets Manager"
-      },
       {
         "command": "SnippetsManager.open",
         "title": "Open snippet view",
@@ -58,11 +56,32 @@
         "command": "SnippetsManager.deleteGroup",
         "title": "Delete snippets group",
         "icon": "$(notebook-delete-cell)"
+      },
+      {
+        "command": "SnippetsManager.addGroupSnippet",
+        "title": "Add snippet in this group",
+        "icon": "$(add)"
+      },
+      {
+        "command": "SnippetsManager.addSnippet",
+        "title": "Create Snippet from Selection",
+        "category": "Snippets Manager",
+        "icon": "$(add)"
+      },
+      {
+        "command": "SnippetsManager.editSnippet",
+        "title": "Edit snippet",
+        "icon": "$(edit)"
+      },
+      {
+        "command": "SnippetsManager.deleteSnippet",
+        "title": "Delete snippet",
+        "icon": "$(notebook-delete-cell)"
       }
     ],
     "keybindings": [
       {
-        "command": "SnippetsManager.run",
+        "command": "SnippetsManager.addSnippet",
         "key": "ctrl+k shift+ctrl+z",
         "mac": "cmd+k shift+cmd+z",
         "when": "editorTextFocus"
@@ -89,7 +108,7 @@
     "menus": {
       "commandPalette": [
         {
-          "command": "SnippetsManager.run",
+          "command": "SnippetsManager.addSnippet",
           "when": "editorHasSelection"
         }
       ],
@@ -109,12 +128,27 @@
         {
           "command": "SnippetsManager.deleteGroup",
           "when": "view == SnippetsManager && viewItem == group",
-          "group": "inline"
+          "group": "inline@10"
         },
         {
           "command": "SnippetsManager.renameGroup",
           "when": "view == SnippetsManager && viewItem == group",
-          "group": "inline"
+          "group": "inline@20"
+        },
+        {
+          "command": "SnippetsManager.addGroupSnippet",
+          "when": "view == SnippetsManager && viewItem == group",
+          "group": "inline@30"
+        },
+        {
+          "command": "SnippetsManager.deleteSnippet",
+          "when": "view == SnippetsManager && viewItem == snippet",
+          "group": "inline@10"
+        },
+        {
+          "command": "SnippetsManager.editSnippet",
+          "when": "view == SnippetsManager && viewItem == snippet",
+          "group": "inline@20"
         }
       ]
     }

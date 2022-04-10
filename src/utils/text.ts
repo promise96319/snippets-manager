@@ -28,9 +28,13 @@ export const transformTextToSnippet = (text: string) => {
       continue
 
     if (line.startsWith(COMMENT_PREFIX)) {
-      const reg = new RegExp(`${COMMENT_PREFIX}(\\w+)\\s*(\\w+)`)
+      // parse comment line, get key and value
+      const reg = new RegExp(`${COMMENT_PREFIX}(\\w+)\\s*(.*)?`)
       const matched = line.match(reg)
-      if (!matched) continue
+      if (!matched) {
+        body.push(line)
+        continue
+      }
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const [_, key, value] = matched
       if (key)
@@ -39,12 +43,17 @@ export const transformTextToSnippet = (text: string) => {
       continue
     }
 
-    body.push(lines[i])
+    body.push(line)
   }
 
-  const isEmptyLine = (line: string) => line.trim().length === 0 || line === '\n' || line === '\r\n' || line === '\r'
+  const isEmptyLine = (line: string) =>
+    !line
+    || line.trim() === ''
+    || line.trim() === '/n'
+    || line.trim() === '/r'
+    || line.trim() === '/r/n'
 
-  const trimBody = body
+  const trimBody = [...body]
   for (let i = 0; i < body.length; i++) {
     if (!isEmptyLine(body[i]))
       break
@@ -56,6 +65,6 @@ export const transformTextToSnippet = (text: string) => {
     trimBody.pop()
   }
 
-  snippet.body = body
+  snippet.body = trimBody
   return snippet
 }
