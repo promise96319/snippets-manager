@@ -4,11 +4,13 @@ import { existsSync } from 'fs'
 import { writeFile } from 'fs/promises'
 import { window, Uri, languages, Range, Position, Selection } from 'vscode'
 import { error, getSelectedText, info, transformSnippetToText, transformTextToSnippet } from './utils'
-import type { Snippet } from './types'
 import { updateGroup } from './group'
+import { provider } from './tree-view'
+import type { Snippet } from './types'
 
 export const SCOPE_GLOBAL = '*'
 export const GROUP_DEFAULT = 'default'
+export const TMP_FILE_SUFFIX = 'gh_snippets_tmp.snippets'
 
 export async function normalizeSnippet(text: string): Promise<Snippet | undefined> {
   if (!text) {
@@ -37,7 +39,7 @@ export async function openSippetFile(group: string = GROUP_DEFAULT, snippet: Sni
   // 2. create file
   const { prefix } = snippet
   const removeSlash = (str: string) => str.replace(/\//g, '_')
-  const filename = `${removeSlash(group)}---${removeSlash(prefix)}.snippets`
+  const filename = `${removeSlash(group)}---${removeSlash(prefix)}_${TMP_FILE_SUFFIX}`
   const filepath = path.join(os.tmpdir(), filename)
 
   // 3. open file
@@ -62,7 +64,7 @@ export async function openSippetFile(group: string = GROUP_DEFAULT, snippet: Sni
   editor.selection = new Selection(position, position)
 }
 
-export async function saveSnippet(group: string = GROUP_DEFAULT, text: string) {
+export async function saveSnippet(text: string, group: string = GROUP_DEFAULT) {
   const snippet = transformTextToSnippet(text)
   if (!snippet)
     return error('Can\'t convert to snippet by select nothing')
@@ -80,4 +82,5 @@ export async function saveSnippet(group: string = GROUP_DEFAULT, text: string) {
   await updateGroup(group, snippet as Snippet)
 
   info(`snippet ${snippet.prefix} is saved`)
+  provider.refresh()
 }
