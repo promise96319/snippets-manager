@@ -1,20 +1,20 @@
 # Snippets Manager
 
-## prd
-- 全局 snippets （global.x.snippets）， 语言 snippets  => javascript.snippets
-- 分类 javascript / global / module
+Manage your code snippets in a super easy way!
 
-- 新增：select => 命令 + 描述 + 分类（如果未指定就是语言分类） + 内容
-  => json
-  => 转换为 snippets 存储
+## Features
 
-- 显示 按分组 + 片段
+- Turn you selection into a snippet easily. (default keymaps `cmd+k` `shift+cmd+s`)
+- Group your snippets as you like, not limited to language.
+- Manage code snippets visually.
+- Auto detect the language of snippets.
+- and etc...
 
-- 编辑：update
-  => 
-- 删除：语言 snippet 删除，=》 全局里移除该 snippet
-- 查询：
+## Preview
 
-## todo
-- replace icons
+![snippets group tree](./media/snippets.png)
+
+ <video id="video" loop="loop" controls="controls">
+<source id="mp4" src="./media/snippets.mp4" type="video/mp4">
+</video>
 

@@ -62,8 +62,14 @@ export async function openSippetFile(group: string = GROUP_DEFAULT, snippet: Sni
   let language = window.activeTextEditor?.document.languageId || 'text'
   const scope = normalizeSnippetScope(snippet.scope)
   if (scope) {
-    const languages = scope.split(',')
-    language = (languages[0] && languages[0].trim()) || language
+    const vscodeLanguages = await languages.getLanguages()
+    scope.split(',').some((s: string) => {
+      if (vscodeLanguages.includes(s.trim())) {
+        language = s.trim()
+        return true
+      }
+      return false
+    })
   }
   await languages.setTextDocumentLanguage(window.activeTextEditor!.document, language)
 

@@ -1,5 +1,6 @@
+import { resolve } from 'path'
 import type { TreeDataProvider, TreeView, Event } from 'vscode'
-import { EventEmitter, TreeItem, TreeItemCollapsibleState, window } from 'vscode'
+import { EventEmitter, TreeItem, TreeItemCollapsibleState, ThemeIcon, window } from 'vscode'
 import { refreshGroups } from './group'
 import type { Snippet, SnippetsMap } from './types'
 
@@ -22,10 +23,8 @@ export class GroupItem extends TreeItem {
     this.group = group
     this.snippets = snippets
     this.contextValue = 'group'
+    this.iconPath = new ThemeIcon('folder')
   }
-
-  // iconPath = join(__filename, '..', 'check-circle-filled.svg')
-  iconPath = '$(list-tree)'
 }
 
 export class SnippetItem extends TreeItem {
@@ -40,14 +39,14 @@ export class SnippetItem extends TreeItem {
     this.id = `${group}_${snippet.prefix}_${snippet.scope}`
     this.label = snippet.prefix
     this.description = snippet.description
-    this.tooltip = snippet.description
+    this.tooltip = snippet.scope ? `scope: ${snippet.scope}` : ''
 
     this.group = group
     this.snippet = snippet
     this.contextValue = 'snippet'
   }
 
-  iconPath = '$(terminal-view-icon)'
+  iconPath = new ThemeIcon('terminal-view-icon')
 }
 
 export class GroupTreeProvider implements TreeDataProvider<TreeItem> {

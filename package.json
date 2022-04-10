@@ -7,7 +7,8 @@
   "keywords": [
     "manage snippets",
     "create snippets",
-    "snippet generator"
+    "snippet generator",
+    "code snippets"
   ],
   "repository": "https://github.com/promise96319/snippets-manager.git",
   "engines": {
@@ -82,8 +83,8 @@
     "keybindings": [
       {
         "command": "SnippetsManager.addSnippet",
-        "key": "ctrl+k shift+ctrl+z",
-        "mac": "cmd+k shift+cmd+z",
+        "key": "ctrl+k shift+ctrl+s",
+        "mac": "cmd+k shift+cmd+s",
         "when": "editorTextFocus"
       }
     ],
@@ -92,7 +93,7 @@
         {
           "id": "snippets-manager-explorer",
           "title": "Snippets Manager",
-          "icon": "media/check-circle-filled.svg"
+          "icon": "$(notebook-mimetype)"
         }
       ]
     },
@@ -100,8 +101,7 @@
       "snippets-manager-explorer": [
         {
           "id": "SnippetsManager",
-          "name": "Snippets Explorer",
-          "icon": "media/check-circle-filled.svg"
+          "name": ""
         }
       ]
     },
