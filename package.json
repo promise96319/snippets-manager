@@ -4,6 +4,7 @@
   "version": "0.0.1",
   "description": "Manage your own code snippets and turn your selection into a snippet easily!",
   "publisher": "promise96319",
+  "icon": "./media/logo.png",
   "keywords": [
     "manage snippets",
     "create snippets",
