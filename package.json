@@ -1,10 +1,10 @@
 {
   "name": "snippets-manager",
   "displayName": "Snippets Manager",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Manage your own code snippets and turn your selection into a snippet easily!",
   "publisher": "promise96319",
-  "icon": "./media/logo.png",
+  "icon": "media/logo.png",
   "keywords": [
     "manage snippets",
     "create snippets",
@@ -155,6 +155,7 @@
     }
   },
   "scripts": {
+    "release": "vsce publish",
     "vscode:prepublish": "yarn run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
