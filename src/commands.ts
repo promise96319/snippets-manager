@@ -6,13 +6,17 @@ import type { GroupItem, SnippetItem } from './provider'
 import { provider } from './provider'
 import { isGroupNameExisted, addGroup, renameGroup, removeGroup, isSnippetNameExisted, removeSnippet } from './group'
 
-export const createRegisterCommand = (ctx: ExtensionContext) => (cmd: string, callback: any) => {
+export interface RegisterCommand {
+  (cmd: string, callback: any): any;
+}
+
+export const createRegisterCommand = (ctx: ExtensionContext): RegisterCommand => (cmd: string, callback: any) => {
   const commandPrefix = 'SnippetsManager'
   return ctx.subscriptions.push(commands.registerCommand(`${commandPrefix}.${cmd}`, callback))
 }
 
 // Group
-export const registerGroupCommands = (registerCommand: (cmd: string, callback: any) => any) => {
+export const registerGroupCommands = (registerCommand: RegisterCommand) => {
   registerCommand('addGroup', async() => {
     const group = await window.showInputBox({ placeHolder: 'snippets group name' })
     if (!group) return
@@ -52,7 +56,7 @@ export const registerGroupCommands = (registerCommand: (cmd: string, callback: a
 }
 
 // Snippet
-export const registerSnippetCommands = (registerCommand: (cmd: string, callback: any) => any) => {
+export const registerSnippetCommands = (registerCommand: RegisterCommand) => {
   registerCommand('addSnippet', async() => {
     const text = getSelectedText()
     if (!text) return error('Can\'t convert to snippet by select nothing')
@@ -76,12 +80,8 @@ export const registerSnippetCommands = (registerCommand: (cmd: string, callback:
   })
 }
 
-// Entry
-export const registerCommands = (ctx: ExtensionContext) => {
-  const registerCommand = createRegisterCommand(ctx)
-  registerGroupCommands(registerCommand)
-  registerSnippetCommands(registerCommand)
-
+// Other
+export const registerOtherCommands = (registerCommand: RegisterCommand) => {
   registerCommand('open', async() => {
     provider.tree.reveal(await provider.getChildren())
   })
@@ -94,4 +94,12 @@ export const registerCommands = (ctx: ExtensionContext) => {
     if (!e.fileName.endsWith(TMP_FILE_SUFFIX)) return
     saveSnippet(e.getText())
   })
+}
+
+// Entry
+export const registerCommands = (ctx: ExtensionContext) => {
+  const registerCommand = createRegisterCommand(ctx)
+  registerGroupCommands(registerCommand)
+  registerSnippetCommands(registerCommand)
+  registerOtherCommands(registerCommand)
 }

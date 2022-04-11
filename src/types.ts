@@ -6,4 +6,5 @@ export interface Snippet {
 }
 
 export type SnippetsMap = Record<string, Snippet>
+
 export type GroupsMap= Record<string, SnippetsMap>

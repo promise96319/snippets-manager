@@ -22,11 +22,11 @@ export function normalizeSnippetGroup(group?: string) {
   return group
 }
 
-export async function normalizeSnippet(text: string): Promise<Snippet | undefined> {
-  if (!text) {
+export async function normalizeSnippet(text?: string): Promise<Snippet | undefined> {
+  if (!text)
     text = getSelectedText() || ''
-    text = text.replace(/\$/g, '\\$')
-  }
+
+  text = text.replace(/\$/g, '\\$')
 
   let key = await window.showInputBox({ placeHolder: 'snippet key' })
   key = key && key.trim()

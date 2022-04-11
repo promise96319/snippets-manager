@@ -1,15 +1,18 @@
 {
   "name": "snippets-manager",
   "displayName": "Snippets Manager",
-  "version": "0.0.2",
-  "description": "Manage your own code snippets and turn your selection into a snippet easily!",
+  "version": "0.0.3",
+  "description": "Manage code snippets and turn your selection into a snippet easily!",
   "publisher": "promise96319",
+  "license": "MIT",
   "icon": "media/logo.png",
   "keywords": [
+    "snippets",
+    "snippet",
+    "code snippets",
     "manage snippets",
     "create snippets",
-    "snippet generator",
-    "code snippets"
+    "snippet generator"
   ],
   "repository": "https://github.com/promise96319/snippets-manager.git",
   "engines": {

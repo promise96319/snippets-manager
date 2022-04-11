@@ -1,4 +1,3 @@
-import { resolve } from 'path'
 import type { TreeDataProvider, TreeView, Event } from 'vscode'
 import { EventEmitter, TreeItem, TreeItemCollapsibleState, ThemeIcon, window } from 'vscode'
 import { refreshGroups } from './group'
