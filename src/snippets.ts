@@ -59,7 +59,7 @@ export async function openSippetFile(group: string = GROUP_DEFAULT, snippet: Sni
   if (!existsSync(filepath))
     await writeFile(filepath, content = text)
   const editor = await window.showTextDocument(Uri.file(filepath))
-  let language = window.activeTextEditor?.document.languageId || 'text'
+  let language = window.activeTextEditor?.document.languageId || 'javascript'
   const scope = normalizeSnippetScope(snippet.scope)
   if (scope) {
     const vscodeLanguages = await languages.getLanguages()
@@ -88,7 +88,7 @@ export async function openSippetFile(group: string = GROUP_DEFAULT, snippet: Sni
   editor.selection = new Selection(position, position)
 }
 
-export async function saveSnippet(text: string, group: string = GROUP_DEFAULT) {
+export async function saveSnippet(text: string) {
   const snippet = transformTextToSnippet(text)
   if (!snippet)
     return error('Can\'t convert to snippet by select nothing')
@@ -101,7 +101,7 @@ export async function saveSnippet(text: string, group: string = GROUP_DEFAULT) {
 
   snippet.scope = normalizeSnippetScope(snippet.scope)
   snippet.description = snippet.description || ''
-  group = normalizeSnippetGroup(snippet.group)
+  const group = normalizeSnippetGroup(snippet.group)
   delete snippet.group
 
   if (currentEditingGroup && currentEditingGroup !== group)

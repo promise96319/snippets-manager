@@ -106,6 +106,7 @@ export async function addGroup(group: string) {
 export async function renameGroup(group: string, target: string) {
   const groups = getAllGroups()
   const snippetsMap = groups[group]
+  if (!group || !snippetsMap) return
   await removeGroup(group)
   return await writeGroup(target, snippetsMap)
 }
@@ -113,6 +114,7 @@ export async function renameGroup(group: string, target: string) {
 export async function removeSnippet(group: string, snippetKey: string) {
   const groupsMap = getAllGroups()
   const snippetsMap: SnippetsMap = groupsMap[group]
+  if (!group || !snippetsMap || !snippetsMap[snippetKey]) return
   delete snippetsMap[snippetKey]
   return await writeGroup(group, snippetsMap)
 }
