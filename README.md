@@ -1,5 +1,7 @@
 <h1>Snippets Manager</h1>
-<p>
+
+English | [简体中文](./README.zh-CN.md)
+<!-- <p>
 <a href="https://marketplace.visualstudio.com/items?itemName=promise96319.snippets-manager" target="__blank">
 <img src="https://img.shields.io/visual-studio-marketplace/v/promise96319.snippets-manager.svg?color=blue&amp;label=VS%20Code%20Marketplace&logo=visual-studio-code" alt="Visual Studio Marketplace Version" />
 </a><a href="https://marketplace.visualstudio.com/items?itemName=promise96319.snippets-manager" target="__blank"><img src="https://img.shields.io/visual-studio-marketplace/d/promise96319.snippets-manager.svg?color=4bdbe3" alt="Visual Studio Marketplace Downloads" /></a>
@@ -9,7 +11,7 @@
 <a href="https://github.com/promise96319/snippets-manager" target="__blank"><img src="https://img.shields.io/github/last-commit/promise96319/snippets-manager.svg?color=c977be" alt="GitHub last commit" /></a>
 <a href="https://github.com/promise96319/snippets-manager/issues" target="__blank"><img src="https://img.shields.io/github/issues/promise96319/snippets-manager.svg?color=a38eed" alt="GitHub issues" /></a>
 <a href="https://github.com/promise96319/snippets-manager" target="__blank"><img alt="GitHub stars" src="https://img.shields.io/github/stars/promise96319/snippets-manager?style=social"></a>
-</p>
+</p> -->
 
 ![snippets group tree](./media/snippets.gif)
 
