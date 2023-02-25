@@ -1,7 +1,7 @@
 {
   "name": "snippets-manager",
   "displayName": "Snippets Manager",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Manage code snippets and turn your selection into a snippet easily!",
   "publisher": "promise96319",
   "license": "MIT",
